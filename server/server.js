@@ -54,7 +54,7 @@ async function handleDownload(req, res) {
 
   res.download(file.path, file.originalName)
 }
-const PORT = process.env.PORT || 4000 || 5000;
+const PORT = process.env.PORT || 4000 || 3000;
 app.listen(PORT,(req,res)=>{
   console.log(`server running on port: ${PORT}`)
 })
