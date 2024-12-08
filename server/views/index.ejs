@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secured File Transfer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+
+  <!-- Add Font Awesome CDN for icons -->
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600&display=swap');
+    body {
+      font-family: 'Rajdhani', sans-serif;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-100 flex items-center justify-center min-h-screen p-4">
+  <div class="w-full max-w-lg p-8 bg-gradient-to-br from-blue-900 via-indigo-800 to-gray-900 rounded-xl shadow-xl">
+    <!-- Heading -->
+    <h1 class="text-4xl font-bold text-center text-white mb-6 flex items-center justify-center space-x-2">
+      <i class="fas fa-shield-alt text-cyan-500"></i>
+      <span>Secured File Transfer</span>
+    </h1>
+
+    <!-- File Upload Form -->
+    <form action="/upload" method="post" enctype="multipart/form-data" class="space-y-6">
+      <div class="flex items-center space-x-2">
+        <label for="file" class="block text-sm font-medium text-gray-300">File</label>
+        <i class="fas fa-file-upload text-gray-400"></i>
+      </div>
+      <input type="file" id="file" name="file" required
+        class="w-full mt-1 px-3 py-2 bg-gray-800 text-gray-100 border border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400" />
+      
+      <div class="flex items-center space-x-2">
+        <label for="password" class="block text-sm font-medium text-gray-300">Password</label>
+        
+      </div>
+      <input type="password" id="password" name="password"
+        class="w-full mt-1 px-3 py-2 bg-gray-800 text-gray-100 border border-gray-700 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-cyan-400 focus:border-cyan-400" />
+
+      <button type="submit"
+        class="w-full py-2 px-4 bg-cyan-600 hover:bg-cyan-500 text-gray-900 font-bold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-cyan-400 flex items-center justify-center space-x-2">
+        <span>Share</span>
+      </button>
+    </form>
+
+    <!-- Invite Section with QR Code -->
+    <% if (locals.fileLink != null) { %>
+      <div id="qrcode" class="py-4 flex justify-center items-center"></div>
+      <div class="mb-6 text-center">
+        <p class="text-lg text-cyan-300">Your file has been uploaded successfully!</p>
+        <a href="<%= locals.fileLink %>" class="text-blue-400 hover:text-blue-600 underline break-words">
+          <%= locals.fileLink %>
+        </a>
+      </div>
+    <% } %>
+    <script>
+      var qrcode = new QRCode(document.getElementById("qrcode"), {
+        text: "<%= locals.fileLink %>",  // URL or text to be encoded
+        width: 120,                   // QR code width
+        height: 120,                  // QR code height
+        colorDark: "black",         // Dark color
+        colorLight: "white",        // Light color
+        correctLevel: QRCode.CorrectLevel.H // Error correction level
+      });
+    </script>
+  </div>
+</body>
+</html>
